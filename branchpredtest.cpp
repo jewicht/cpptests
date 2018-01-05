@@ -5,7 +5,7 @@
 #include <chrono>
 #include <algorithm>
 
-
+//count the number of elements of vec larger than cut
 uint32_t count(const std::vector<uint32_t>& vec, uint32_t cut)
 {
   uint32_t r=0;
@@ -15,7 +15,7 @@ uint32_t count(const std::vector<uint32_t>& vec, uint32_t cut)
   return r;
 }
 
-
+//measure the time to count
 void measure(const std::vector<uint32_t>& vec, uint32_t cut)
 {
   auto start = std::chrono::steady_clock::now();
@@ -37,28 +37,18 @@ int main(int argc, char** argv)
 
   const uint32_t mmin = 0, mmax = 10000, mcut = 5000;
 
-  
   std::random_device rd;  
   std::mt19937 generator(rd()); 
   std::uniform_int_distribution<uint32_t> distribution(mmin, mmax);
-							  
 
   std::vector<uint32_t> vec(size);
   std::generate(vec.begin(), vec.end(), [&](){return distribution(generator);});
   
+  std::cout << "count with random data:";
+  measure(vec, mcut);
 
-  std::cout << "Unsorted add:";
-  measure(vec, mcut);
-  std::cout << "Unsorted add:";
-  measure(vec, mcut);
-  
   std::sort(vec.begin(), vec.end());
   
-  std::cout << "Sorted add  :";
+  std::cout << "count with sorted data:";
   measure(vec, mcut);
-  std::cout << "Sorted add  :";
-  measure(vec, mcut);
-
-
-
 }
